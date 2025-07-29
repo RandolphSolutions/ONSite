@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bin Usage Tracker</title>
+</head>
+<body>
+  <h2>Part Info</h2>
+  <p><strong>Bin ID:</strong> <span id="bin_id"></span></p>
+  <p><strong>Description:</strong> <span id="desc"></span></p>
+
+  <label for="qty_used">Qty Used:</label>
+  <input type="number" id="qty_used" min="1"><br><br>
+
+  <label for="qty_order">Qty to Order:</label>
+  <input type="number" id="qty_order" min="1"><br><br>
+
+  <button onclick="sendEmail('used')">Used</button>
+  <button onclick="sendEmail('order')">Order More</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
