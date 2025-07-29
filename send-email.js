@@ -1,33 +1,29 @@
-export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+async function sendEmail(type) {
+  const bin = getQueryParam('bin');
+  const desc = decodeURIComponent(getQueryParam('desc'));
+  const qtyUsed = document.getElementById('qty_used');
+  const qtyOrder = document.getElementById('qty_order');
+  const qty = type === 'used' ? qtyUsed.value : qtyOrder.value;
 
-  const { bin, desc, qty, type } = req.body;
-  const subject = type === 'used' 
-    ? `Part Used - ${bin}` 
-    : `Reorder Request - ${bin}`;
-  const body = `
-Part: ${bin}
-Description: ${desc}
-Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
-`;
-
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      from: "no-reply@yourdomain.com",
-      to: "braden@randolph.solutions",
-      subject,
-      text: body
-    })
-  });
-
-  if (!response.ok) {
-    return res.status(500).json({ message: "Failed to send email" });
+  if (!qty || qty <= 0) {
+    alert("Please enter a valid quantity.");
+    return;
   }
 
-  return res.status(200).json({ message: "Email sent!" });
+  const res = await fetch('/api/send-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ bin, desc, qty, type })
+  });
+
+  const data = await res.json();
+
+  if (res.ok) {
+    alert(`✅ ${type === 'used' ? 'Usage' : 'Order'} email sent for ${bin} (Qty: ${qty})`);
+    // Clear quantity fields
+    qtyUsed.value = '';
+    qtyOrder.value = '';
+  } else {
+    alert(`❌ Failed to send email: ${data.message || 'Unknown error'}`);
+  }
 }
