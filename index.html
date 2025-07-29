@@ -31,29 +31,25 @@
       width: 100%;
       padding: 0.6rem;
       font-size: 1.2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     button {
-      width: 48%;
+      width: 100%;
       padding: 0.8rem;
       font-size: 1.2rem;
-      margin: 0.5rem 1% 0 0;
-      background-color: #0066cc;
-      color: white;
+      margin-bottom: 1rem;
       border: none;
       border-radius: 5px;
+      color: white;
     }
 
-    button:last-of-type {
+    #btnUsed {
+      background-color: #0066cc;
+    }
+
+    #btnOrder {
       background-color: #2ca02c;
-    }
-
-    @media (max-width: 480px) {
-      button {
-        width: 100%;
-        margin-bottom: 0.5rem;
-      }
     }
   </style>
 </head>
@@ -64,14 +60,11 @@
 
   <label for="qty_used">Qty Used:</label>
   <input type="number" id="qty_used" inputmode="numeric">
+  <button id="btnUsed" onclick="sendEmail('used')">Used</button>
 
   <label for="qty_order">Qty to Order:</label>
   <input type="number" id="qty_order" inputmode="numeric">
-
-  <div style="display: flex; flex-wrap: wrap;">
-    <button onclick="sendEmail('used')">Used</button>
-    <button onclick="sendEmail('order')">Order More</button>
-  </div>
+  <button id="btnOrder" onclick="sendEmail('order')">Order More</button>
 
   <script src="script.js"></script>
 </body>
