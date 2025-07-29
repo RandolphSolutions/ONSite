@@ -83,6 +83,11 @@
   <div class="info"><strong>Part ID:</strong> <span id="bin_id"></span></div>
   <div class="info"><strong>Description:</strong> <span id="desc"></span></div>
 
+  <label for="email">Your Email:</label>
+  <input type="email" id="email" name="email" required />
+  <button type="button" id="email-reset" style="display:none; font-size: 0.8rem; color: #0066cc; background: none; border: none; padding: 0;">Not you? Change email</button>
+
+
   <label for="qty_used">Qty Used:</label>
   <input type="number" id="qty_used" inputmode="numeric">
   <button id="btnUsed" onclick="sendEmail('used')">Request Quote</button>
