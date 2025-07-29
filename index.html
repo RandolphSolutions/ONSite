@@ -11,6 +11,24 @@
       max-width: 500px;
     }
 
+    header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #ccc;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    header p {
+      margin: 0.25rem 0 0;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
     h2 {
       margin-top: 10;
       font-size: 1.5rem;
@@ -54,6 +72,11 @@
   </style>
 </head>
 <body>
+  <header>
+    <h1>Randolph Solutions</h1>
+    <p>Email: info@randolph.solutions | Phone: (555) 123-4567</p>
+  </header>
+
   <h2>Randolph.Solutions Parts</h2>
   <div class="info"><strong>Part ID:</strong> <span id="bin_id"></span></div>
   <div class="info"><strong>Description:</strong> <span id="desc"></span></div>
@@ -69,3 +92,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
