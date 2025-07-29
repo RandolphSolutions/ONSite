@@ -1,42 +1,62 @@
-function getQueryParam(param) {
-  return new URLSearchParams(window.location.search).get(param);
-}
+// Email localStorage logic
+document.addEventListener("DOMContentLoaded", function () {
+  const emailInput = document.getElementById("email");
+  const resetBtn = document.getElementById("email-reset");
+  const savedEmail = localStorage.getItem("userEmail");
 
-document.addEventListener('DOMContentLoaded', () => {
-  const bin = getQueryParam('bin');
-  const desc = getQueryParam('desc');
+  if (savedEmail) {
+    emailInput.value = savedEmail;
+    emailInput.style.display = "none";
+    resetBtn.style.display = "inline";
+  }
 
-  document.getElementById('bin_id').textContent = bin || 'N/A';
-  document.getElementById('desc').textContent = decodeURIComponent(desc || '');
+  resetBtn.addEventListener("click", function () {
+    localStorage.removeItem("userEmail");
+    emailInput.style.display = "inline";
+    emailInput.value = "";
+    resetBtn.style.display = "none";
+  });
 });
 
-async function sendEmail(type) {
-  const bin = getQueryParam('bin');
-  const desc = decodeURIComponent(getQueryParam('desc'));
-  const pn = getQueryParam('pn'); // Part number (hidden)
+function sendEmail(type) {
+  const binId = document.getElementById("bin_id").textContent;
+  const desc = document.getElementById("desc").textContent;
+  const qty = type === 'used'
+    ? document.getElementById("qty_used").value
+    : document.getElementById("qty_order").value;
 
-  const qtyUsed = document.getElementById('qty_used');
-  const qtyOrder = document.getElementById('qty_order');
-  const qty = type === 'used' ? qtyUsed.value : qtyOrder.value;
+  let email = document.getElementById("email").value;
+  if (!email) {
+    email = localStorage.getItem("userEmail");
+  } else {
+    localStorage.setItem("userEmail", email);
+  }
 
-  if (!qty || qty <= 0) {
-    alert("Please enter a valid quantity.");
+  if (!email || !qty) {
+    alert("Please enter your email and quantity.");
     return;
   }
 
-  const res = await fetch('/api/send-email', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ bin, desc, qty, type, pn })
-  });
+  const payload = {
+    bin_id: binId,
+    description: desc,
+    qty: qty,
+    type: type,
+    email: email
+  };
 
-  const data = await res.json();
-
-  if (res.ok) {
-    alert(`✅ ${type === 'used' ? 'Usage' : 'Order'} email sent for ${bin} (Qty: ${qty})`);
-    qtyUsed.value = '';
-    qtyOrder.value = '';
-  } else {
-    alert(`❌ Email failed: ${data.message}`);
-  }
-}
+  fetch("/api/send-email", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    if (response.ok) {
+      alert("Email sent successfully!");
+      document.getElementById("qty_used").value = "";
+      document.getElementById("qty_order").value = "";
+    } else {
+      alert("Error sending email.");
+    }
+  })
+  .catch(e
