@@ -19,7 +19,7 @@ Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
     },
     body: JSON.stringify({
       from: "no-reply@yourdomain.com",
-      to: "sales@yourcompany.com",
+      to: "braden@randolph.solutions",
       subject,
       text: body
     })
