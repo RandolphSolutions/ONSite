@@ -26,7 +26,7 @@ Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
       },
       body: JSON.stringify({
         from: "onboarding@resend.dev",  // Use this for testing
-        to: "your-email@example.com",   // Your real test inbox
+        to: "braden@randolph.solutions",   // Your real test inbox
         subject,
         text: body
       })
