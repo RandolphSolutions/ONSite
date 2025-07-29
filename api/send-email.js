@@ -18,7 +18,7 @@ Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      from: "no-reply@yourdomain.com",
+      from: "onboarding@resend.dev",
       to: "braden@randolph.solutions",
       subject,
       text: body
