@@ -13,9 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 async function sendEmail(type) {
   const bin = getQueryParam('bin');
   const desc = decodeURIComponent(getQueryParam('desc'));
-  const qty = type === 'used' 
-    ? document.getElementById('qty_used').value 
-    : document.getElementById('qty_order').value;
+  const qtyUsed = document.getElementById('qty_used');
+  const qtyOrder = document.getElementById('qty_order');
+  const qty = type === 'used' ? qtyUsed.value : qtyOrder.value;
 
   if (!qty || qty <= 0) {
     alert("Please enter a valid quantity.");
@@ -29,5 +29,13 @@ async function sendEmail(type) {
   });
 
   const data = await res.json();
-  alert(data.message || 'Email sent!');
+
+  if (res.ok) {
+    alert(`✅ ${type === 'used' ? 'Usage' : 'Order'} email sent for ${bin} (Qty: ${qty})`);
+    // Clear quantity fields
+    qtyUsed.value = '';
+    qtyOrder.value = '';
+  } else {
+    alert(`❌ Failed to send email: ${data.message || 'Unknown error'}`);
+  }
 }
