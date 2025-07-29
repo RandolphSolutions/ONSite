@@ -1,21 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Bin Usage Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bin Tracker</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 1rem;
+      padding: 0;
+      max-width: 500px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.5rem;
+    }
+
+    .info {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 1rem;
+      display: block;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      width: 48%;
+      padding: 0.8rem;
+      font-size: 1.2rem;
+      margin: 0.5rem 1% 0 0;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:last-of-type {
+      background-color: #2ca02c;
+    }
+
+    @media (max-width: 480px) {
+      button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Part Info</h2>
-  <p><strong>Bin ID:</strong> <span id="bin_id"></span></p>
-  <p><strong>Description:</strong> <span id="desc"></span></p>
+  <h2>Bin Tracker</h2>
+  <div class="info"><strong>Bin ID:</strong> <span id="bin_id"></span></div>
+  <div class="info"><strong>Description:</strong> <span id="desc"></span></div>
 
   <label for="qty_used">Qty Used:</label>
-  <input type="number" id="qty_used" min="1"><br><br>
+  <input type="number" id="qty_used" inputmode="numeric">
 
   <label for="qty_order">Qty to Order:</label>
-  <input type="number" id="qty_order" min="1"><br><br>
+  <input type="number" id="qty_order" inputmode="numeric">
 
-  <button onclick="sendEmail('used')">Used</button>
-  <button onclick="sendEmail('order')">Order More</button>
+  <div style="display: flex; flex-wrap: wrap;">
+    <button onclick="sendEmail('used')">Used</button>
+    <button onclick="sendEmail('order')">Order More</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
