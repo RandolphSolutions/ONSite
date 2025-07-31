@@ -2,7 +2,7 @@ function getQueryParam(param) {
   return new URLSearchParams(window.location.search).get(param);
 }
 
-// 🔽 Handle email input + reset on load
+// Load part info and email (if stored)
 document.addEventListener('DOMContentLoaded', () => {
   const bin = getQueryParam('bin');
   const desc = getQueryParam('desc');
@@ -11,22 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('desc').textContent = decodeURIComponent(desc || '');
 
   const emailInput = document.getElementById('email');
-  const resetBtn = document.getElementById('email-reset');
   const savedEmail = localStorage.getItem('userEmail');
 
-  if (savedEmail && emailInput && resetBtn) {
+  if (savedEmail && emailInput) {
     emailInput.value = savedEmail;
-    emailInput.style.display = 'none';
-    resetBtn.style.display = 'inline';
-  }
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      localStorage.removeItem('userEmail');
-      emailInput.value = '';
-      emailInput.style.display = 'inline';
-      resetBtn.style.display = 'none';
-    });
   }
 });
 
@@ -41,15 +29,17 @@ async function sendEmail(type) {
   let email = emailInput ? emailInput.value : '';
 
   if (!email) {
-    email = localStorage.getItem('userEmail');
-  } else {
-    localStorage.setItem('userEmail', email);
+    alert("Please enter your email.");
+    return;
   }
+
+  // Save email to localStorage
+  localStorage.setItem('userEmail', email);
 
   const qty = type === 'used' ? qtyUsed.value : qtyOrder.value;
 
-  if (!qty || qty <= 0 || !email) {
-    alert("Please enter a valid quantity and email.");
+  if (!qty || qty <= 0) {
+    alert("Please enter a valid quantity.");
     return;
   }
 
