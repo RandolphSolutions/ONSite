@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { bin, desc, qty, type } = req.body;
+  const { bin, desc, qty, type, email } = req.body;
 
   if (!bin || !desc || !qty || !type) {
     return res.status(400).json({ message: "Missing required fields" });
@@ -12,6 +12,7 @@ export default async function handler(req, res) {
     : `Reorder Request - ${bin}`;
 
   const body = `
+User Email: ${email}  
 Part: ${bin}
 Description: ${desc}
 Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
