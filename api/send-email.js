@@ -1,21 +1,22 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-  const { bin, desc, qty, type, email } = req.body;
+  const { bin, desc, qty, email, notes } = req.body;
 
-  if (!bin || !desc || !qty || !type) {
+  if (!bin || !desc || !qty || !email) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
-  const subject = type === 'used' 
-    ? `Part Used - ${bin}` 
-    : `Reorder Request - ${bin}`;
+  const subject = `Quote / Order Request - ${bin}`;
 
   const body = `
-User Email: ${email}  
+User Email: ${email}
 Part: ${bin}
 Description: ${desc}
-Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
+Quantity Requested: ${qty}
+Notes: ${notes || 'None'}
 `;
 
   try {
@@ -26,14 +27,15 @@ Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from: "onboarding@resend.dev",  // Use this for testing
-        to: "braden@randolph.solutions",   // Your real test inbox
+        from: "Randolph Solutions <onboarding@resend.dev>",  // Update if using your domain
+        to: "braden@randolph.solutions",
         subject,
         text: body
       })
     });
 
     const result = await response.json();
+
     if (!response.ok) {
       console.error("Resend error:", result);
       return res.status(500).json({ message: "Resend API failed" });
