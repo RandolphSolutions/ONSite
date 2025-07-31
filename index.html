@@ -61,6 +61,12 @@
       margin-bottom: 0.5rem;
     }
 
+     input[type="notes"] {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
 
     button {
       width: 100%;
@@ -69,7 +75,7 @@
       margin-bottom: 1rem;
       border: none;
       border-radius: 5px;
-      color: white;
+      color: #0055A5;
     }
 
     #btnUsed {
@@ -99,7 +105,7 @@
   <input type="number" id="qty" inputmode="numeric" required>
 
   <label for="notes">Notes (optional):</label>
-  <textarea id="notes" rows="3" placeholder="Add any comments here..."></textarea>
+  <textarea id="notes" rows="5" placeholder="Add additional Notes"></textarea>
 
   <button onclick="sendEmail()">Quote / Order More</button>
 
