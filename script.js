@@ -18,14 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-async function sendEmail(type) {
+async function sendEmail() {
   const bin = getQueryParam('bin');
   const desc = decodeURIComponent(getQueryParam('desc'));
   const pn = getQueryParam('pn'); // Hidden part number
 
-  const qtyUsed = document.getElementById('qty_used');
-  const qtyOrder = document.getElementById('qty_order');
+  const qtyInput = document.getElementById('qty');
+  const notesInput = document.getElementById('notes');
   const emailInput = document.getElementById('email');
+
+  const qty = qtyInput ? qtyInput.value : '';
+  const notes = notesInput ? notesInput.value : '';
   let email = emailInput ? emailInput.value : '';
 
   if (!email) {
@@ -33,28 +36,26 @@ async function sendEmail(type) {
     return;
   }
 
-  // Save email to localStorage
-  localStorage.setItem('userEmail', email);
-
-  const qty = type === 'used' ? qtyUsed.value : qtyOrder.value;
-
   if (!qty || qty <= 0) {
     alert("Please enter a valid quantity.");
     return;
   }
 
+  // Save email to localStorage
+  localStorage.setItem('userEmail', email);
+
   const res = await fetch('/api/send-email', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ bin, desc, qty, type, pn, email })
+    body: JSON.stringify({ bin, desc, qty, pn, email, notes })
   });
 
   const data = await res.json();
 
   if (res.ok) {
-    alert(`✅ ${type === 'used' ? 'Usage' : 'Order'} email sent for ${bin} (Qty: ${qty})`);
-    qtyUsed.value = '';
-    qtyOrder.value = '';
+    alert(`✅ Request sent for ${bin} (Qty: ${qty})`);
+    qtyInput.value = '';
+    notesInput.value = '';
   } else {
     alert(`❌ Email failed: ${data.message}`);
   }
