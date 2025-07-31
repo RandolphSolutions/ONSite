@@ -1,9 +1,9 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { bin, desc, qty, type } = req.body;
+  const { bin, desc, qty, type, email } = req.body;
 
-  if (!bin || !desc || !qty || !type) {
+  if (!bin || !desc || !qty || !type || !email) {
     return res.status(400).json({ message: "Missing required fields" });
   }
 
@@ -15,6 +15,7 @@ export default async function handler(req, res) {
 Part: ${bin}
 Description: ${desc}
 Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
+Customer Email: ${email}
 `;
 
   try {
@@ -25,10 +26,11 @@ Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from: "onboarding@resend.dev",  // Use this for testing
-        to: "braden@randolph.solutions",   // Your real test inbox
+        from: "onboarding@resend.dev",
+        to: "braden@randolph.solutions",
         subject,
-        text: body
+        text: body,
+        // reply_to: email // optional if you want to reply directly to customer
       })
     });
 
@@ -45,3 +47,4 @@ Quantity ${type === 'used' ? 'Used' : 'To Order'}: ${qty}
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
