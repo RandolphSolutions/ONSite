@@ -95,13 +95,15 @@
   <div class="info"><strong>Part ID:</strong> <span id="bin_id"></span></div>
   <div class="info"><strong>Description:</strong> <span id="desc"></span></div>
 
-  <label for="qty_used">Qty:</label>
-  <input type="number" id="qty_used" inputmode="numeric">
-  <button id="btnUsed" onclick="sendEmail('used')">Request Quote</button>
+  <label for="qty">Quantity:</label>
+  <input type="number" id="qty" inputmode="numeric" required>
 
-  <label for="qty_order">Qty to Order:</label>
-  <input type="number" id="qty_order" inputmode="numeric">
-  <button id="btnOrder" onclick="sendEmail('order')">Order More</button>
+  <label for="notes">Notes (optional):</label>
+  <textarea id="notes" rows="3" placeholder="Add any comments here..."></textarea>
+
+  <button onclick="sendEmail()">Quote / Order More</button>
+
+  
 
   <script src="script.js"></script>
 </body>
