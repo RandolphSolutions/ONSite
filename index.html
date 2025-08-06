@@ -6,108 +6,123 @@
   <style>
     body {
       font-family: sans-serif;
-      margin: 1rem;
-      padding: 0.5;
-      max-width: 500px;
+      margin: auto;
+      padding: 1rem;
+      max-width: 480px; /* fits comfortably on iPhone without edge-to-edge stretch */
+      background-color: #fafafa;
     }
 
+    /* Header */
     header {
       text-align: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #0055A5;
-      background-color: #e6f0fa;
+      margin-bottom: 1rem;
+      padding: 1rem 0;
+      border-bottom: 3px solid #0055A5;
+      background-color: #0055A5;
+      color: white;
+      border-radius: 6px;
     }
 
     header h1 {
       margin: 0;
       font-size: 1.8rem;
-      color: #0055A5;
     }
 
     header p {
       margin: 0.25rem 0 0;
-      font-size: 0.95rem;
-      color: #0055A5;
+      font-size: 0.9rem;
+      opacity: 0.85;
     }
 
-    h2 {
-      margin-top: 10;
-      font-size: 1rem;
-    }
-
-    .info {
+    /* Section grouping */
+    .section {
+      background-color: white;
+      padding: 0.75rem;
+      border-radius: 6px;
       margin-bottom: 1rem;
-      font-size: 1.1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
 
     label {
       font-weight: bold;
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       display: block;
+      font-size: 0.95rem;
     }
 
-    input[type="number"] {
-      width: 100%;
-      padding: 0.6rem;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    
-        input[type="email"] {
-      width: 100%;
-      padding: 0.6rem;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-
-      textarea {
+    input, textarea {
       width: 100%;
       padding: 0.6rem;
       font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
       box-sizing: border-box;
     }
 
-
-    button {
-      width: 100%;
-      padding: 0.8rem;
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      color: white;
+    .info strong {
+      font-size: 0.9rem;
+      color: #555;
     }
 
+    .info span {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #222;
+      display: block;
+      margin-top: 0.25rem;
+    }
 
-    #btnOrder {
+    /* Button styling */
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 6px;
+      color: white;
       background-color: #2ca02c;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #248f24;
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Randolph Solutions</h1>
-    <p> sales@randolph-electronics.com | (423)308-9688</p>
+    <p>sales@randolph-electronics.com | (423) 308-9688</p>
   </header>
 
-  
-  <label for="email">Your Email:</label>
-  <input type="email" id="email" name="email" required />
-  
-  <div class="info"><strong>Part ID:</strong> <span id="bin_id"></span></div>
-  <div class="info"><strong>Description:</strong> <span id="desc"></span></div>
+  <!-- Email Section -->
+  <div class="section">
+    <label for="email">Your Email:</label>
+    <input type="email" id="email" name="email" required />
+  </div>
 
-  <label for="qty">Quantity:</label>
-  <input type="number" id="qty" inputmode="numeric" required>
+  <!-- Part Info Section -->
+  <div class="section">
+    <div class="info"><strong>Part ID:</strong> <span id="bin_id"></span></div>
+    <div class="info"><strong>Description:</strong> <span id="desc"></span></div>
+  </div>
 
-  <label for="notes">Notes (optional):</label>
-  <textarea id="notes" rows="5" placeholder="Add additional Notes"></textarea>
+  <!-- Quantity & Notes Section -->
+  <div class="section">
+    <label for="qty">Quantity:</label>
+    <input type="number" id="qty" inputmode="numeric" required>
 
+    <label for="notes">Notes (optional):</label>
+    <textarea id="notes" rows="4" placeholder="Add additional notes"></textarea>
+  </div>
+
+  <!-- Button -->
   <button id="btnOrder" onclick="sendEmail()">Quote / Order More</button>
-
-  
 
   <script src="script.js"></script>
 </body>
