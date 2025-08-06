@@ -53,10 +53,10 @@ async function sendEmail() {
   const data = await res.json();
 
   if (res.ok) {
-    alert(`✅ Request sent for ${bin} (Qty: ${qty})`);
+    alert(`✅ Request sent for (${qty}) ${bin}`);
     qtyInput.value = '';
     notesInput.value = '';
   } else {
-    alert(`❌ Email failed: ${data.message}`);
+    alert(`❌ Email failed: send email sales@randolph.solutions`);
   }
 }
